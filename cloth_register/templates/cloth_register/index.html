@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloth Store</title>
+  <style>
+    body {
+        background-image: url("{% static 'cloth_register/prod_details.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: repeat;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+    .details-container
+     {
+        background-image: url("{% static 'cloth_register/details.jpeg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        height: 35vh;
+    }
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'cloth_register/styles.css' %}">
+  
+  <script src="{% static 'cloth_register/scripts.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <header class="header bg-dark text-white py-4">
+    <div class="container text-center">
+      <h1>Hey {{ user.username }}, Welcome to the Clothing Store</h1>
+      <nav>
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="#home">
+            <span class="icon">
+              <ion-icon size="large" name="home"></ion-icon>
+            </span>
+          </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#products">
+              <span class="icon">
+                <ion-icon size="large" name="woman"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#about">
+              <span class="icon">
+                <ion-icon size="large" name="information-circle"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#contact">
+            <span class="icon">
+              <ion-icon size="large" name="call"></ion-icon>
+            </span>
+          </a>
+          </li>
+          {% if user.is_authenticated and user.userprofile.is_admin %}
+          <li class="list-inline-item">
+            <a href="{% url 'create_clothing_item' %}">
+              <span class="icon">
+                <ion-icon size="large" name="cloud-upload"></ion-icon>
+              </span>
+            </a>
+          </li>
+          <li class="list-inline-item"> 
+            <a href="{% url 'display_orders' %}" title="Orders">
+              <span class="icon">
+                <ion-icon size="large" name="bag-check"></ion-icon>
+              </span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    </header>
+    <main class="py-4">
+      <div class="container">
+          <section id="products">
+              <h2>Our Products</h2>
+              <div class="row">
+                  {% for product in index %}
+                  <div class="col-md-3">
+                      <div class="card mb-4 d-flex">
+                        <img src="..{{product.image.url}}" class="card-img-top img-fluid" alt="Product Image" style="height: 300px; width: 300%;" >
+                          <div class="card-body details-container">
+                              <h5 class="card-title">Name : {{ product.name }}</h5>
+                              <p class="card-text">Price: ${{ product.price }}</p>
+                              <p class="card-text">Available Sizes: {{ product.size }}</p>
+                              <p class="card-text">Availability: {{ product.availability }}</p>
+                              <a href="{% url 'product_detail' product.id %}">Buy Now</a>
+                          </div>
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+          </section>  
+      <section id="about">
+        <h1>About Us</h1>
+        <h3>Established in 2003, <span style="color: #8B4513; font-size: 1.2em;">Sree Venkataramana Sarees Cloth Store</span> is a special place for women 
+          to discover a wide range of clothing options. 
+          <span style="text-decoration: underline;">From traditional sarees to modern outfits</span>, we have something for every style and event. 
+          <span style="font-weight: bold;">Located at Nellore</span>, our goal is to offer quality clothes that suit your taste and make you 
+          feel fantastic. We take pride in giving you a welcoming and personalized shopping experience, 
+          ensuring you find just what you're looking for. Come visit us and explore a world of fashion 
+          and elegance created especially for you.</h3>
+          <div class="text-center">
+            <nav-2>
+              <ul class="list-inline-a">
+                <li class="list-inline-item"><a href="#home">Home</a></li>
+                <li class="list-inline-item"><a href="#products">Products</a></li>
+                <li class="list-inline-item"><a href="#contact">Contact</a></li>
+              </ul>
+            </nav>
+          </div>
+      </section>
+
+      <section id="contact">
+        <h1>Contact Us</h1>
+        <div class="contact-info">
+          <p>Contact us with any questions you may have.</p>
+          <p>We will get back to you within 24 hours.</p>
+        </div>
+        <div class="social-logos">
+          <a href="https://www.facebook.com"><img src="{% static 'cloth_register/facebook.jpeg' %}" alt="Facebook"></a>
+          <a href="https://www.instagram.com/venkataramana_sarees?igsh=dDQ3bTFsaHE4dnk0"><img src="{% static 'cloth_register/instagram.jpeg' %}" alt="Instagram"></a>
+          <a href="https://www.youtube.com"><img src="{% static 'cloth_register/youtube.jpeg' %}" alt="YouTube"></a>
+        </div>
+      
+        <div class="contact-info-box">
+          <p class="email"><i class="fas fa-envelope"></i>sreevenkataramanasarees@gmail.com</p>
+          <p class="phone"><i class="fas fa-phone"></i>+91 9704205575</p>
+        </div>
+        <div class="map-link">
+          <p>Find us on <a href="https://maps.app.goo.gl/U95ShSyb2WNv3Wbs5" target="_blank">Google Maps</a></p>
+        </div>
+        <div>
+          ----------------------------------------------------------
+        </div>
+        <div>
+          <nav-2>
+            <ul class="list-inline-a">
+              <li class="list-inline-item"><a href="#home">Home</a></li>
+              <li class="list-inline-item"><a href="#products">Products</a></li>
+              <li class="list-inline-item"><a href="#about">About</a></li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+      <script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js'> </script>
+    </div>
+    <div class="text-center"> <p></p> </div>
+  
+  <footer class="bg-dark text-white py-3">
+    <div class="container text-center">
+      <p>Sree Venkataramana Sarees Cloth Store</p>
+      <p>&copy; 2024 Cloth Store</p>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
+

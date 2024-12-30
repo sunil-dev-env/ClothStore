@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="{% static 'cloth_register/styles.css' %}">
+</head>
+<body>
+  <header>
+    <h1>User Profile</h1>
+  </header>
+
+  <main class="profile">
+    <div class="profile-card">
+      <h2>Welcome Sunil, {{ user.username }} </h2>
+      <p>Email: {{ user.email }}</p>
+      {% if user.userprofile.is_admin %}
+        <p>You are an admin</p>
+      {% else %}
+        <p>You are a regular user</p>
+      {% endif %}
+      <!-- Other profile details if needed -->
+    </div>
+  </main>
+
+  <footer>
+    <!-- Footer content -->
+  </footer>
+</body>
+</html>

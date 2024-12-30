@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <style>
+        body {
+            background-image: url("{% static 'cloth_register/index.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+      </style>
+    <link rel="stylesheet" href="{% static 'cloth_register/styles.css' %}">   
+</head>
+<body>
+    <header>
+        <h1>{{ item.name }} Details</h1>
+        <img src="..{{ item.image.url}}"  class="card-img-top product-image img-fluid" alt="{{item.name}}">
+    </header>
+
+    <main>
+        <div class="product-details">
+        Number of Additional Images: {{ item.additional_images.all|length }} <br>
+        {% if user.is_authenticated and user.userprofile.is_admin %}
+            <a href="{% url 'upload_additional_images' item.id %}">Add Additional Images</a>
+            {% endif %}
+            {% if item.additional_images.all %}
+                <h2>Additional Images</h2>
+                <div class="additional-images">
+                    {% for prod in item.additional_images.all %}
+                        <img src="..{{prod.image.url}}" class="card-img-top product-image img-fluid" alt="{{item.name}}" style="height: 200px;">
+                    {% endfor %}
+                    </div>                                                                    
+            {% endif %}
+            </br>
+            <p>Price: ${{ item.price }}</p>
+            <p>Size: {{ item.size }}</p>
+            <p>Availability: {% if item.availability %} Available {% else %} Not Available {% endif %}</p>
+            <a href="{% url 'place_order' item.id %}">Order Now</a>
+        </div>
+    </main>
+</body>
+</html>
+

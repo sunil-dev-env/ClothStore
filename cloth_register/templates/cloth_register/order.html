@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <style>
+        body {
+            background-image: url("{% static 'cloth_register/prod.jpeg' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+      </style>
+</head>
+<body>
+    <h1>Place Order for {{ product.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Place Order</button>
+    </form>
+</body>
+</html>
